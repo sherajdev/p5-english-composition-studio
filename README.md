@@ -3,7 +3,7 @@
 An interactive, single-file website that helps a Primary 5 student prepare for English composition (Paper 1, Part 2 Continuous Writing).
 
 ## Features
-- 11 Primary 5 English SA2 2025 exam papers organised by composition topic, with the picture prompts
+- 11 Primary 5 English exam papers organised by composition topic, with the picture prompts
 - Filters by theme (Responsibility, Lessons, Effort & growth) and by picture clue
 - Story mountain tips for every paper, with a walkthrough and sample sentences
 - "Think before you write" questions, each with a hideable example answer

@@ -515,7 +515,7 @@ document.addEventListener("click",e=>{
   if(cur){nav("");setTimeout(scroll,60)}else scroll();
 });
 function extraSections(){
-  const learnt=store.get("zayd-words",[]);
+  const learnt=store.get("p5-words",[]);
   const pct=[15,30,25,15,15];
   const mountain=`<section class="sec" id="mountain"><div><div class="eyebrow">Story mountain</div><h2>Every story is a climb</h2></div>
     <p class="sub">Plan your story as five stops. The bar shows roughly how many of your words each stop should get.</p>
@@ -539,7 +539,7 @@ function extraSections(){
   return mountain+models+practice+vocab+checklist;
 }
 function wireExtras(){
-  let learnt=store.get("zayd-words",[]);
+  let learnt=store.get("p5-words",[]);
   const topicBanks=[...new Set(PAPERS.map(p=>p.key))].map(k=>({t:PAPERS.find(p=>p.key===k).topic,words:T[k].w}));
   const wordBtn=w=>`<button class="word ${learnt.includes(w)?"got":""}" data-w="${esc(w)}" aria-pressed="${learnt.includes(w)}">${esc(w)}</button>`;
   const card=g=>`<div class="vcard" style="--c:var(--${g.c||"sky"}${g.c==="sun"?"-soft":g.c==="sky"?"-soft":""})"><h3>${esc(g.t)}</h3>${g.rows?g.rows.map(r=>`<div class="vrow"><span class="plain">${esc(r[0])}</span><span class="arr">→</span><span class="rich">${r[1].split(", ").map(wordBtn).join("")}</span></div>`).join(""):`<div class="rich">${g.words.map(wordBtn).join("")}</div>`}</div>`;
@@ -551,15 +551,15 @@ function wireExtras(){
   }
   draw();
   $("#vsearch").oninput=e=>draw(e.target.value.trim());
-  $("#vocab").onclick=e=>{const b=e.target.closest(".word");if(!b)return;const w=b.dataset.w;learnt=learnt.includes(w)?learnt.filter(x=>x!==w):[...learnt,w];store.set("zayd-words",learnt);draw($("#vsearch").value.trim());if(learnt.includes(w))burst(b)};
-  let ticks=store.get("zayd-checks",[]);
+  $("#vocab").onclick=e=>{const b=e.target.closest(".word");if(!b)return;const w=b.dataset.w;learnt=learnt.includes(w)?learnt.filter(x=>x!==w):[...learnt,w];store.set("p5-words",learnt);draw($("#vsearch").value.trim());if(learnt.includes(w))burst(b)};
+  let ticks=store.get("p5-checks",[]);
   function drawC(){
     $("#checks").innerHTML=CHECK.map((c,i)=>`<label class="chk ${ticks.includes(i)?"on":""}"><input type="checkbox" data-i="${i}" ${ticks.includes(i)?"checked":""}><span>${esc(c)}</span></label>`).join("");
     $("#ctxt").textContent=`${ticks.length} of ${CHECK.length} checked`;$("#cbar").style.width=(ticks.length/CHECK.length*100)+"%";
   }
   drawC();
-  $("#checks").onchange=e=>{const i=+e.target.dataset.i;ticks=e.target.checked?[...ticks,i]:ticks.filter(x=>x!==i);store.set("zayd-checks",ticks);drawC();if(e.target.checked&&ticks.length===CHECK.length)celebrate2()};
-  $("#cclear").onclick=()=>{ticks=[];store.set("zayd-checks",ticks);drawC()};
+  $("#checks").onchange=e=>{const i=+e.target.dataset.i;ticks=e.target.checked?[...ticks,i]:ticks.filter(x=>x!==i);store.set("p5-checks",ticks);drawC();if(e.target.checked&&ticks.length===CHECK.length)celebrate2()};
+  $("#cclear").onclick=()=>{ticks=[];store.set("p5-checks",ticks);drawC()};
 }
 
 function wirePractice(){
@@ -632,7 +632,7 @@ function home(){
   $("#app").innerHTML=`
   ${navHtml()}
   <header class="hero">
-    <div class="eyebrow">Zayd’s Primary 5 English · SA2 2025</div>
+    <div class="eyebrow">Primary 5 English · End of Year</div>
     <h1><span class="l1">write your</span><span class="l2">story</span></h1>
     <p class="lead">Eleven real exam papers, sorted by topic. Pick a paper, climb the story mountain, answer the thinking questions, then plan your adventure.</p>
     <button class="btn" data-jump="filters">Let’s start</button>
@@ -654,7 +654,7 @@ function home(){
     <p class="note">Based on the Primary English syllabus: plan and organise ideas, then use rich and varied language. The paper asks for at least 150 words and no more than 10 minutes of planning.</p>
     <div class="tips">${TOOLKIT.map(k=>`<div class="tip"><div class="ico">${k.i}</div><h3>${k.t}</h3><div class="swap"><span class="bad">${esc(k.bad)}</span><span class="good">${esc(k.good)}</span></div></div>`).join("")}</div>
   </section>
-  <p class="foot">Made for Zayd from the P5 English EOY papers folder. Pictures are cropped from each paper’s Part 2 page.</p>`;
+  <p class="foot">Made from the P5 English EOY papers folder. Pictures are cropped from each paper’s Part 2 page.</p>`;
   $("#themeChips").onclick=e=>{const b=e.target.closest("button");if(!b)return;fTheme=b.dataset.theme;refresh()};
   $("#clueChips").onclick=e=>{const b=e.target.closest("button");if(!b)return;fClue=b.dataset.clue;refresh()};
   $("#reset").onclick=()=>{fTheme="all";fClue="all";refresh()};
@@ -688,7 +688,7 @@ let cur=(location.hash||"").slice(1);
 function nav(id){cur=id;try{history.pushState(null,"",id?"#"+id:location.pathname+location.search)}catch(e){}route()}
 function go(id){nav(id)}
 function paperPage(p){
-  const d=T[p.key]; const doneKey="zayd-done-"+p.id; const planKey="zayd-plan-"+p.id;
+  const d=T[p.key]; const doneKey="p5-done-"+p.id; const planKey="p5-plan-"+p.id;
   let done=store.get(doneKey,[]);
   let stage=0;
   $("#app").innerHTML=`
